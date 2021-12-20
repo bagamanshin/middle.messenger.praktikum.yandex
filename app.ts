@@ -1,12 +1,12 @@
-import express, { Request, Response } from 'express';
-import path from 'path';
+const express = require('express');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static(`${__dirname}/dist`));
 
-app.get('*', (req: Request, res: Response) => {
+app.get('*', (req: typeof express.Request, res: typeof express.Response) => {
   res.sendFile(path.join(__dirname, '/dist/', 'index.html'));
 });
 
