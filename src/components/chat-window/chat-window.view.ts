@@ -1,8 +1,9 @@
 import Handlebars from 'handlebars';
 
-import { Block, bus } from '../../modules';
+import { Block } from '../../modules';
 
 import template from './chat-window.tmpl';
+import templateEmptyChatWindow from './chat-window._empty.tmpl';
 
 import './chat-window.scss';
 
@@ -20,13 +21,6 @@ import { ChatMessage } from '../../types';
 
 import render from '../../utils/renderDOM';
 import getFullTime from '../../utils/getFullTime';
-
-Handlebars.registerHelper('notNull', function (string1, options) {
-  if (string1 !== null) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
 
 const chatWindowController = new ChatWindowController();
 
@@ -50,11 +44,11 @@ export default class ChatWindow extends Block {
       className: props.className ? `${props.className} ${wrapClass}` : wrapClass
     });
 
-    bus.on('chats:chat-selected', () => {
+    this.on('chats:chat-selected', () => {
       this._render();
     });
 
-    bus.on('chat-window:message-received', (message: Record<string, string | number>) => {
+    this.on('chat-window:message-received', (message: Record<string, string | number>) => {
       const msg = new Message({
         sender: `${message.user_id}`,
         senderIdentity: authService.getCurrentUserId.toString() === (message.user_id).toString()
@@ -67,7 +61,7 @@ export default class ChatWindow extends Block {
       scrollChatWindowToBottom();
     });
 
-    bus.on('chat-window:all-messages-loaded', (messages: ChatMessage[]) => {
+    this.on('chat-window:all-messages-loaded', (messages: ChatMessage[]) => {
       messages.forEach((message) => {
         const msg = new Message({
           sender: `${message.user_id}`,
@@ -84,28 +78,27 @@ export default class ChatWindow extends Block {
   }
 
   render() {
-    const compiledTemplate = Handlebars.compile(template);
     const chat = chatService.selectedChat;
 
     const wrap = document.createElement('div');
     wrap.classList.add('chat-thread');
 
-    wrap.addEventListener('click', (e) => {
-      const el = (e.target as HTMLElement).closest('.chat-thread__head__settings')
-      || (e.target as HTMLElement).closest('.tooltip');
-      if (el) {
-        bus.emit('tooltip:show');
-      } else {
-        bus.emit('tooltip:hide');
-      }
-    });
-
-    wrap.innerHTML = compiledTemplate({
-      chat,
-      currentDate: data.currentDate
-    });
-
     if (chat) {
+      wrap.innerHTML = Handlebars.compile(template)({
+        chat,
+        currentDate: data.currentDate
+      });
+
+      wrap.addEventListener('click', (e) => {
+        const el = (e.target as HTMLElement).closest('.chat-thread__head__settings')
+        || (e.target as HTMLElement).closest('.tooltip');
+        if (el) {
+          this.emit('tooltip:show');
+        } else {
+          this.emit('tooltip:hide');
+        }
+      });
+
       const actionsContainer = wrap.querySelector('.chat-thread__actions');
 
       actionsContainer?.append(chatWindowController.controls.inputs.message.getContent());
@@ -117,8 +110,10 @@ export default class ChatWindow extends Block {
         chatWindowController.controls.tooltips.chatSettings.getContent()
       );
 
-      bus.emit('chat:connect', chat.chat_id);
+      this.emit('chat:connect', chat.chat_id);
     } else {
+      wrap.innerHTML = Handlebars.compile(templateEmptyChatWindow)({});
+
       const emptyBlockParagraph = wrap.querySelector('.chat-thread__empty__create');
       emptyBlockParagraph?.append(chatWindowController.controls.buttons.createChat.getContent());
     }

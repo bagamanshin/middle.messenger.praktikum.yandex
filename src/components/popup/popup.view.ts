@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { Block, bus } from '../../modules';
+import { Block } from '../../modules';
 
 import template from './popup.tmpl';
 
@@ -39,10 +39,10 @@ export default class Popup extends Block<HTMLDivElement, IPopupProps> {
 
     this.hide();
 
-    bus.on('popup:show', () => {
+    this.on('popup:show', () => {
       this.show();
     });
-    bus.on('popup:hide', () => {
+    this.on('popup:hide', () => {
       this.hide();
     });
   }
@@ -66,13 +66,13 @@ export default class Popup extends Block<HTMLDivElement, IPopupProps> {
     const inputFieldset = wrap.querySelector('.fieldset--popup-title');
     inputFieldset?.append(popupController.controls.inputs.title.getContent());
 
-    bus.on('popup-create-chat:valid-field', (field: InputType) => {
+    this.on('popup-create-chat:valid-field', (field: InputType) => {
       setInputValidationStatus.call(this, popupController.controls.inputs, field, 'valid');
     });
-    bus.on('popup-create-chat:invalid-field', (field: InputType) => {
+    this.on('popup-create-chat:invalid-field', (field: InputType) => {
       setInputValidationStatus.call(this, popupController.controls.inputs, field, 'invalid');
     });
-    bus.on('popup-create-chat:reset-check-results', () => {
+    this.on('popup-create-chat:reset-check-results', () => {
       Object.keys(popupController.controls.inputs).forEach((field: InputType) => {
         setInputValidationStatus.call(this, popupController.controls.inputs, field, 'valid');
       });

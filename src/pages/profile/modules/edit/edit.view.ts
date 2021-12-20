@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { Block, bus } from '../../../../modules';
+import { Block } from '../../../../modules';
 
 import layout from '../../../../layout/profile';
 import template from './edit.tmpl';
@@ -26,13 +26,13 @@ export default class ProfileEditPage extends Block {
   }
 
   componentDidMount() {
-    bus.emit('user:fetch-user');
+    this.emit('user:fetch-user');
   }
 
   show() {
     Block.prototype.show.call(this);
 
-    bus.emit('user:fetch-user');
+    this.emit('user:fetch-user');
   }
 
   hide() {
@@ -46,13 +46,13 @@ export default class ProfileEditPage extends Block {
       );
     });
 
-    bus.emit('edit:reset-models');
+    this.emit('edit:reset-models');
   }
 
   renderDOM(rootQuery: string) {
     layout.renderDOM(rootQuery);
 
-    bus.on('edit:valid-field', (field: InputType) => {
+    this.on('edit:valid-field', (field: InputType) => {
       setInputValidationStatus.call(
         this,
         editController.controls.inputs,
@@ -61,7 +61,7 @@ export default class ProfileEditPage extends Block {
       );
     });
 
-    bus.on('edit:invalid-field', (field: InputType) => {
+    this.on('edit:invalid-field', (field: InputType) => {
       setInputValidationStatus.call(
         this,
         editController.controls.inputs,
@@ -70,7 +70,7 @@ export default class ProfileEditPage extends Block {
       );
     });
 
-    bus.on('edit:reset-check-results', () => {
+    this.on('edit:reset-check-results', () => {
       Object.keys(editController.controls.inputs).forEach(
         (field: InputType) => {
           setInputValidationStatus.call(

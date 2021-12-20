@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { Block, bus } from '../../../../modules';
+import { Block } from '../../../../modules';
 
 import layout from '../../../../layout/profile';
 import template from './edit-password.tmpl';
@@ -34,15 +34,15 @@ export default class ProfileEditPasswordPage extends Block {
   renderDOM(rootQuery: string) {
     layout.renderDOM(rootQuery);
 
-    bus.on('edit-password:valid-field', (field: InputType) => {
+    this.on('edit-password:valid-field', (field: InputType) => {
       setInputValidationStatus.call(this, editPasswordController.controls.inputs, field, 'valid');
     });
 
-    bus.on('edit-password:invalid-field', (field: InputType) => {
+    this.on('edit-password:invalid-field', (field: InputType) => {
       setInputValidationStatus.call(this, editPasswordController.controls.inputs, field, 'invalid');
     });
 
-    bus.on('edit-password:reset-check-results', () => {
+    this.on('edit-password:reset-check-results', () => {
       Object.keys(editPasswordController.controls.inputs).forEach((field: InputType) => {
         setInputValidationStatus.call(this, editPasswordController.controls.inputs, field, 'valid');
       });

@@ -57,7 +57,7 @@ const pageUserPathname = '/user';
 describe('HTTP:', () => {
   let MockXhr: typeof MockXMLHttpRequest.MockXhr;
 
-  const http = new HTTP('');
+  const http = new HTTP('', '');
 
   function mockResponse(response: string, status: number) {
     // Mock JSON response
@@ -78,8 +78,12 @@ describe('HTTP:', () => {
   it('should send GET', async () => {
     const response = '{ "message": "Success GET!" }';
     mockResponse(response, 200);
-    const { data } = await http.get('/url');
-    assert.equal(data, response);
+    const url = '/url';
+    const options = { data: { 'this-is': 'sparta' } };
+    const result = await http.get(url, options);
+    assert.equal(result.data, response);
+    // @ts-ignore
+    assert.equal(result.response.url, `${url}?this-is=sparta`);
   });
 
   it('should send POST', async () => {

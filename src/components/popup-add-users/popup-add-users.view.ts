@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { Block, bus } from '../../modules';
+import { Block } from '../../modules';
 
 import template from './popup-add-users.tmpl';
 
@@ -37,10 +37,10 @@ export default class PopupAddUsers extends Block<HTMLDivElement, IPopupProps> {
 
     this.hide();
 
-    bus.on('popup-add-users:show', () => {
+    this.on('popup-add-users:show', () => {
       this.show();
     });
-    bus.on('popup-add-users:hide', () => {
+    this.on('popup-add-users:hide', () => {
       this.hide();
     });
   }
@@ -63,13 +63,13 @@ export default class PopupAddUsers extends Block<HTMLDivElement, IPopupProps> {
     const inputFieldset = wrap.querySelector('.fieldset--popup-add-user-ids');
     inputFieldset?.append(popupAddUsersController.controls.inputs.users.getContent());
 
-    bus.on('popup-add-users:valid-field', (field: InputType) => {
+    this.on('popup-add-users:valid-field', (field: InputType) => {
       setInputValidationStatus.call(this, popupAddUsersController.controls.inputs, field, 'valid');
     });
-    bus.on('popup-add-users:invalid-field', (field: InputType) => {
+    this.on('popup-add-users:invalid-field', (field: InputType) => {
       setInputValidationStatus.call(this, popupAddUsersController.controls.inputs, field, 'invalid');
     });
-    bus.on('popup-add-users:reset-check-results', () => {
+    this.on('popup-add-users:reset-check-results', () => {
       Object.keys(popupAddUsersController.controls.inputs).forEach((field: InputType) => {
         setInputValidationStatus.call(this, popupAddUsersController.controls.inputs, field, 'valid');
       });

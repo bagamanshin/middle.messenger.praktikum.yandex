@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { Block, bus } from '../../modules';
+import { Block } from '../../modules';
 
 import template from './popup-remove-users.tmpl';
 
@@ -37,10 +37,11 @@ export default class PopupAddUsers extends Block<HTMLDivElement, IPopupProps> {
 
     this.hide();
 
-    bus.on('popup-remove-users:show', () => {
+    this.on('popup-remove-users:show', () => {
       this.show();
     });
-    bus.on('popup-remove-users:hide', () => {
+
+    this.on('popup-remove-users:hide', () => {
       this.hide();
     });
   }
@@ -63,13 +64,15 @@ export default class PopupAddUsers extends Block<HTMLDivElement, IPopupProps> {
     const inputFieldset = wrap.querySelector('.fieldset--popup-remove-user-ids');
     inputFieldset?.append(popupAddUsersController.controls.inputs.users.getContent());
 
-    bus.on('popup-remove-users:valid-field', (field: InputType) => {
+    this.on('popup-remove-users:valid-field', (field: InputType) => {
       setInputValidationStatus.call(this, popupAddUsersController.controls.inputs, field, 'valid');
     });
-    bus.on('popup-remove-users:invalid-field', (field: InputType) => {
+
+    this.on('popup-remove-users:invalid-field', (field: InputType) => {
       setInputValidationStatus.call(this, popupAddUsersController.controls.inputs, field, 'invalid');
     });
-    bus.on('popup-remove-users:reset-check-results', () => {
+
+    this.on('popup-remove-users:reset-check-results', () => {
       Object.keys(popupAddUsersController.controls.inputs).forEach((field: InputType) => {
         setInputValidationStatus.call(this, popupAddUsersController.controls.inputs, field, 'valid');
       });

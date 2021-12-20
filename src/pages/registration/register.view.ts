@@ -2,7 +2,7 @@ import Handlebars from 'handlebars';
 
 import './register.scss';
 
-import { Block, bus } from '../../modules';
+import { Block } from '../../modules';
 
 import layout from '../../layout/main';
 import template from './register.tmpl';
@@ -37,15 +37,15 @@ export default class RegisterPage extends Block {
   renderDOM(rootQuery: string): void {
     layout.renderDOM(rootQuery);
 
-    bus.on('register:valid-field', (field: InputType) => {
+    this.on('register:valid-field', (field: InputType) => {
       setInputValidationStatus.call(this, registerController.controls.inputs, field, 'valid');
     });
 
-    bus.on('register:invalid-field', (field: InputType) => {
+    this.on('register:invalid-field', (field: InputType) => {
       setInputValidationStatus.call(this, registerController.controls.inputs, field, 'invalid');
     });
 
-    bus.on('register:reset-check-results', () => {
+    this.on('register:reset-check-results', () => {
       Object.keys(registerController.controls.inputs).forEach((field: InputType) => {
         setInputValidationStatus.call(this, registerController.controls.inputs, field, 'valid');
       });

@@ -104,9 +104,7 @@ bus.on('edit:check-form', () => {
 
     const createUpdateAvatarPromise = () => new Promise((resolve) => {
       if (avatarData.file) {
-        const fd = new FormData();
-        fd.append('avatar', avatarData.file);
-        resolve(userAvatarApi.update(fd));
+        resolve(userAvatarApi.update({ avatar: avatarData.file }));
       }
       resolve(true);
     });

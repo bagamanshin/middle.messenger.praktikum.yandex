@@ -44,17 +44,20 @@ function errorResponse(
   };
 }
 
-const BASE_URL = 'https://ya-praktikum.tech/api/v2';
-
 export default class HTTPTransport {
   _baseUrl: string;
 
-  constructor(basePath: string) {
+  constructor(basePath: string, BASE_URL = 'https://ya-praktikum.tech/api/v2') {
     this._baseUrl = BASE_URL + basePath;
   }
 
-  get = (url: string, options: Partial<RequestOptions> = {}) => this
-    .request(this._baseUrl + url, { ...options, method: Methods.GET });
+  get = (url: string, options: Partial<RequestOptions> = {}) => {
+    const { data } = options;
+    return this.request(
+      this._baseUrl + (data ? `${url}?${queryStringify(data)}` : url),
+      { ...options, method: Methods.GET }
+    );
+  };
 
   post = (url: string, options: Partial<RequestOptions> = {}) => this
     .request(this._baseUrl + url, { ...options, method: Methods.POST });
@@ -77,9 +80,8 @@ export default class HTTPTransport {
 
     return new Promise<RequestResult>((resolve) => {
       const xhr = new XMLHttpRequest();
-      const isGet = method === Methods.GET;
 
-      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
+      xhr.open(method, url);
 
       Object
         .keys(headers)
@@ -128,7 +130,7 @@ export default class HTTPTransport {
         resolve(errorResponse(xhr, 'Request took longer than expected.'));
       };
 
-      if (isGet || !data) {
+      if (!data) {
         xhr.send();
       } else {
         xhr.send(data instanceof FormData ? data : JSON.stringify(data));

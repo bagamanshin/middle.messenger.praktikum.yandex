@@ -1,5 +1,5 @@
 import { v4 as makeUUID } from 'uuid';
-import { EventBus } from '../EventBus/event-bus';
+import globalBus, { EventBus } from '../EventBus/event-bus';
 
 import isEqual from '../../utils/isEqual';
 import { IBlockProps } from './types';
@@ -213,6 +213,18 @@ export default abstract class Block<
 
     return element;
   };
+
+  on(eventName: string, handler: Function) {
+    globalBus.on(eventName, handler);
+  }
+
+  off(eventName: string, handler: Function) {
+    globalBus.off(eventName, handler);
+  }
+
+  emit(eventName: string, data?: unknown) {
+    globalBus.emit(eventName, data);
+  }
 
   shown(): void {}
 

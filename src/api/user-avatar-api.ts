@@ -1,14 +1,18 @@
 import { HTTP } from '../modules';
-import BaseAPI from './base-api';
 
-import { RequestResult } from '../types';
+import { RequestResult, ChangeUserAvatarRequest } from '../types';
 import errorHandler from '../utils/decorators/errorHandler';
 
 const userAvatarAPIInstance = new HTTP('/user/profile/avatar');
 
-class UserAvatarAPI extends BaseAPI {
+class UserAvatarAPI {
   @errorHandler
-  update(data: FormData): Promise<RequestResult> {
+  update(payload: ChangeUserAvatarRequest): Promise<RequestResult> {
+    const { avatar } = payload;
+
+    const data = new FormData();
+    data.append('avatar', avatar);
+
     return userAvatarAPIInstance.put('/', {
       data,
       headers: {

@@ -1,4 +1,4 @@
-import { Block, bus } from '../../modules';
+import { Block } from '../../modules';
 
 import authService from '../../modules/services/auth';
 import chatService from '../../modules/services/chat';
@@ -23,10 +23,10 @@ export default class ChatList extends Block<HTMLDivElement, IChatListProps> {
       className: props.className ? `${props.className} ${wrapClass}` : wrapClass
     });
 
-    bus.on('chats:chat-selected', () => {
+    this.on('chats:chat-selected', () => {
       this._render();
     });
-    bus.on('chats:chats-updated', () => {
+    this.on('chats:chats-updated', () => {
       this._render();
     });
   }

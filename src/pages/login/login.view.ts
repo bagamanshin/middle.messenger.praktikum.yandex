@@ -2,7 +2,7 @@ import Handlebars from 'handlebars';
 
 import './login.scss';
 
-import { Block, bus } from '../../modules';
+import { Block } from '../../modules';
 
 import render from '../../utils/renderDOM';
 
@@ -38,13 +38,13 @@ export default class LoginPage extends Block {
   renderDOM(rootQuery: string): void {
     layout.renderDOM(rootQuery);
 
-    bus.on('login:valid-field', (field: InputType) => {
+    this.on('login:valid-field', (field: InputType) => {
       setInputValidationStatus.call(this, loginController.controls.inputs, field, 'valid');
     });
-    bus.on('login:invalid-field', (field: InputType) => {
+    this.on('login:invalid-field', (field: InputType) => {
       setInputValidationStatus.call(this, loginController.controls.inputs, field, 'invalid');
     });
-    bus.on('login:reset-check-results', () => {
+    this.on('login:reset-check-results', () => {
       Object.keys(loginController.controls.inputs).forEach((field: InputType) => {
         setInputValidationStatus.call(this, loginController.controls.inputs, field, 'valid');
       });

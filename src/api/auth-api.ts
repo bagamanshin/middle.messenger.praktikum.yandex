@@ -1,12 +1,11 @@
 import { HTTP } from '../modules';
-import BaseAPI from './base-api';
 
 import { LoginRequest, RegisterRequest, RequestResult } from '../types';
 import errorHandler from '../utils/decorators/errorHandler';
 
 const authAPIInstance = new HTTP('/auth');
 
-class AuthAPI extends BaseAPI {
+class AuthAPI {
   @errorHandler
   create(user: RegisterRequest): Promise<RequestResult> {
     return authAPIInstance.post('/signup', { data: user });

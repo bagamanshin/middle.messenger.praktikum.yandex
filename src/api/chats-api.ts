@@ -1,12 +1,11 @@
 import { HTTP } from '../modules';
-import BaseAPI from './base-api';
 
 import { RequestResult, CreateChatRequest } from '../types';
 import errorHandler from '../utils/decorators/errorHandler';
 
 const chatsAPIInstance = new HTTP('/chats');
 
-class ChatsAPI extends BaseAPI {
+class ChatsAPI {
   @errorHandler
   create(data: CreateChatRequest): Promise<RequestResult> {
     return chatsAPIInstance
