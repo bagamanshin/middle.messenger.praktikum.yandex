@@ -4,7 +4,8 @@
   "plugins": ["@typescript-eslint"],
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
   "settings": {
     "import/resolver": {
@@ -24,6 +25,15 @@
         "tsx": "never"
       }
     ],
-    "comma-dangle": ["error", "never"]
+    "comma-dangle": ["error", "never"],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error"
+    ],
+    "no-underscore-dangle": "off",
+    "class-methods-use-this": "off",
+    "max-classes-per-file": "off"
   }
 }

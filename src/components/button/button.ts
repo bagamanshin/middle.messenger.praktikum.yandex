@@ -1,9 +1,12 @@
 import Handlebars from 'handlebars';
 
-import Block, { IBlockProps } from '../../modules/block';
+import { Block } from '../../modules';
 import template from './button.tmpl';
 
 import './button.scss';
+
+import { IBlockProps } from '../../modules/Block/types';
+import ButtonStatus from './enums';
 
 interface IButtonProps {
   text?: string;
@@ -27,11 +30,11 @@ export default class Button extends Block<HTMLButtonElement, IButtonProps> {
     wrapper.disabled = disabled;
 
     switch (status) {
-      case 'success':
+      case ButtonStatus.Success:
         wrapper.classList.remove('button--error');
         wrapper.classList.add('button--success');
         break;
-      case 'error':
+      case ButtonStatus.Error:
         wrapper.classList.remove('button--success');
         wrapper.classList.add('button--error');
         break;
