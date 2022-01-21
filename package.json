@@ -10,7 +10,9 @@
     "start": "npm install && npm run build && ts-node app.ts",
     "lint": "eslint . --ext .ts",
     "lint:styles": "stylelint '**/*.{css,scss,sass}'",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha"
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha",
+    "validate": "npm-run-all --parallel lint lint:styles test tsc",
+    "precommit": "npm run validate"
   },
   "repository": {
     "type": "git",
@@ -44,6 +46,7 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^1.7.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
     "mini-css-extract-plugin": "^2.5.2",
     "mock-xmlhttprequest": "^7.0.4",
     "sass": "^1.43.2",
