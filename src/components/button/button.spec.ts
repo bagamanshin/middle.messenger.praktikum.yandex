@@ -8,7 +8,7 @@ describe('Button component:', () => {
   it('should contain text', () => {
     const textButton = 'This is some text';
     const button = new Button({ text: textButton });
-    assert.equal(button.element.textContent, 'another string');
+    assert.equal(button.element.textContent, textButton);
   });
 
   it('should handle click', () => {
