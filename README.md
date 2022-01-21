@@ -35,8 +35,8 @@ https://github.com/bagamanshin/middle.messenger.praktikum.yandex/pull/4
 
 ## Docker-сборка проекта
 
-- `docker build -t IMAGE_NAME` - сборка контейнера (образа) с именем IMAGE_NAME
-- `docker run -p PORT:3000 -d IMAGE_NAME` - запуск контейнера (образа) с именем IMAGE_NAME, доступный по порту PORT
+- `docker build -t <IMAGE_NAME> .` - сборка контейнера (образа) с именем IMAGE_NAME
+- `docker run -p <PORT>:3000 -d <IMAGE_NAME>` - запуск контейнера (образа) с именем IMAGE_NAME, доступный по порту PORT
 
 ## Использование
 
