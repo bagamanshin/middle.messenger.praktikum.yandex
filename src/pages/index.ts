@@ -1,3 +1,5 @@
+import '../globalStyles/global.scss';
+
 import { Router, Notifications } from '../modules';
 
 import LoginPage from './login';
