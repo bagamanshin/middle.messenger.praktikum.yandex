@@ -12,7 +12,8 @@
     "lint:styles": "stylelint '**/*.{css,scss,sass}'",
     "lint:ts": "tsc",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha",
-    "validate": "npm-run-all --parallel lint lint:styles lint:ts test"
+    "validate": "npm-run-all --parallel lint lint:styles lint:ts test",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
     "husky": "^7.0.4",
     "mini-css-extract-plugin": "^2.5.2",
     "mock-xmlhttprequest": "^7.0.4",
+    "npm-run-all": "^4.1.5",
     "sass": "^1.43.2",
     "sass-loader": "^12.4.0",
     "stylelint": "^14.2.0",
