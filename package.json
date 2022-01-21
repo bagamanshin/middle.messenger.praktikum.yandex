@@ -12,7 +12,8 @@
     "lint:styles": "stylelint '**/*.{css,scss,sass}'",
     "lint:ts": "tsc",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha",
-    "validate": "npm-run-all --parallel lint lint:styles lint:ts test"
+    "validate": "npm-run-all --parallel lint lint:styles lint:ts test",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
