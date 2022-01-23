@@ -25,13 +25,14 @@ https://github.com/bagamanshin/middle.messenger.praktikum.yandex/pull/4
 
 - `npm run dev` — запуск версии для разработчика с Hot module replacement
 - `npm run test` — запуск тестов.
+- `npm run validate` — запуск проверки синтаксиса (eslint, stylelint, typescript).
 
-На проекте реализован precommit с помощью пакета Husky.
+На проекте реализован precommit с помощью пакета Husky (запуск скрипта `npm run validate`).
 
 ## Запуск стабильной версии (билда)
 
 - `npm run build` — сборка стабильной версии,
-- `npm start` — запуск NodeJS сервера для раздачи статичных файлов из директории **dist**.
+- `npm start` — запуск NodeJS express-сервера для раздачи статичных файлов из директории **dist**.
 
 ## Docker-сборка проекта
 

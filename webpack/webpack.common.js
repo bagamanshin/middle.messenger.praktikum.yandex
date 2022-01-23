@@ -3,10 +3,9 @@ const MiniCss = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: '/src/pages/index.ts',
+  entry: path.resolve(__dirname, '..', 'src/pages/index.ts'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '..', 'dist'),
     filename: 'bundle.js'
   },
   resolve: {
@@ -23,7 +22,7 @@ module.exports = {
           {
             loader: 'ts-loader',
             options: {
-              configFile: path.resolve(__dirname, 'tsconfig.json')
+              configFile: path.resolve(__dirname, '..', 'tsconfig.json')
             }
           }
         ],
@@ -38,16 +37,6 @@ module.exports = {
         ]
       }
     ]
-  },
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist')
-    },
-    historyApiFallback: {
-      index: 'index.html'
-    },
-    compress: true,
-    port: 9000
   },
   plugins: [
     new MiniCss({
